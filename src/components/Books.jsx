@@ -1,5 +1,5 @@
 import { Bone, BoxGeometry, Uint16BufferAttribute, Skeleton, SkinnedMesh, Vector3, Float32BufferAttribute, Color, MeshStandardMaterial, SRGBColorSpace, MathUtils} from "three"
-import {pages, pageAtom} from "./UI"
+import {pages, pageAtom, FAKE_PAGE} from "./UI"
 import { useEffect, useMemo, useRef } from "react"
 //import { SkeletonHelper } from "three/src/Three.Core.js";
 import { useFrame } from "@react-three/fiber";
@@ -9,13 +9,13 @@ import { degToRad } from "three/src/math/MathUtils.js";
 import { easing } from "maath";
 import { useState } from "react";
 
-// 4:3 aspect ratio
 const easingFactor = 0.5; //Control the speed of the easing
 const easingFactorFold = 0.3; // Control the speed of the fold easing
 const insideCurveStrength = 0.18; // Control the intensity of the inside curve bend
 const outsideCurveStrength = 0.01; // Control the intensity of the outside curve bend
 const turningCurveStrength = 0.09; // Control the intensity of the turning curve bend
 
+// 4:3 aspect ratio
 const PAGE_WIDTH = 1.3;
 const PAGE_HEIGHT = 1.71;
 const PAGE_DEPTH = 0.003;
@@ -79,7 +79,7 @@ const Page = ({number, front, back, page, opened, bookClosed, ...props}) => {
         `/textures/${front}.jpg`,
         `/textures/${back}.jpg`,
         ...(number === 0 || number === pages.length -1
-            ? [`/textures/book-cover-roughness.jpg`]
+            ? [`/textures/old-texture-roughness.jpg`]
             : []),
     ]) 
     picture.colorSpace = picture2.colorSpace = SRGBColorSpace; //use colorSpace to ensure correct color space
@@ -176,7 +176,7 @@ const Page = ({number, front, back, page, opened, bookClosed, ...props}) => {
         for (let i = 0; i < bones.length; i++) {
             const target = i === 0 ? group.current : bones[i];
 
-            const insideCurveIntensity = i < 8 ? Math.sin(i*0.2+0.25) : 0;
+            const insideCurveIntensity = i < 8 ? Math.sin(i*0.05+0.5) : 0;
             const outsideCurveIntensity = i >= 8 ? Math.cos(i*0.2+0.5) : 0;
             const turningCurveIntensity = 
                 Math.sin(i * Math.PI * (1/bones.length)) * turningTime;
@@ -232,7 +232,11 @@ const Page = ({number, front, back, page, opened, bookClosed, ...props}) => {
             }}
             onClick={(e) => {
                 e.stopPropagation();
-                setPage(opened ? number : number + 1);
+                if (bookClosed && number === 0){
+                    setPage(FAKE_PAGE);
+                } else{
+                    setPage(opened ? number : number + 1);
+                }                
                 setHighLighted(false);
             }}
         >
