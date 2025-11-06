@@ -59,6 +59,8 @@ export const UI = () => {
                   const actualPageIndex =
                     index === 0
                       ? 0
+                      : index === displayPages.length - 1
+                      ? pages.length - 1
                       : index + 20;
                   setPage(actualPageIndex);
                 }}
