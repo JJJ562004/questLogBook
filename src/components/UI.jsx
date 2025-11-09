@@ -52,20 +52,20 @@ export const UI = () => {
                 key={index}
                 className={`border-transparent hover:border-white transition-all duration-300  px-4 py-3 rounded-full  text-lg uppercase shrink-0 border ${
                   page === (index === 0
-                    ? 0 // Cover
+                    ? 0 
                     : index === displayPages.length - 1
-                    ? pages.length // Back Cover
-                    : index + FAKE_PAGE - 1) // Map displayPages index to pages index
+                    ? pages.length
+                    : index + FAKE_PAGE - 1)
                     ? "bg-white/90 text-black"
                     : "bg-black/30 text-white"
                 }`}
                 onClick={() => {
                   const actualPageIndex =
                     index === 0
-                      ? 0 // Cover
+                      ? 0 
                       : index === displayPages.length - 1
-                      ? pages.length // Back Cover
-                      : index + FAKE_PAGE - 1; // Map displayPages index to pages index
+                      ? pages.length 
+                      : index + FAKE_PAGE - 1;
                   setPage(actualPageIndex);
                 }}
               >

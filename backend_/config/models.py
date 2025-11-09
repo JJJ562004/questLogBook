@@ -12,7 +12,7 @@ class StudentIn(Student):
 
 class StudentOut(Student):
     """Base model for returning student data."""
-    _id: Optional[str] = Field(default=None, alias="_id")
+    _id: Optional["str"]
 
 class StudentCollection(BaseModel):
     students: List[StudentOut] = Field(..., title="List of students")
