@@ -542,7 +542,7 @@ export const Books = (...props) => {
                     number={index} 
                     opened={delayedPage > index}
                     bookClosed={delayedPage === 0 || delayedPage === pages.length}
-                    student={students[index] ?? {name: "Loading...", age:"", grade: ""}}
+                    //student={students[index] ?? {name: "Loading...", age:"", grade: ""}}
                     {...pageData}
                 />
         ))}
